@@ -3,13 +3,13 @@ import { IUser, IUserPayload, TOKEN_TYPE } from '../interfaces/user';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { ApiError } from '../lib';
 import { StatusCodes } from 'http-status-codes';
-import User from '../DB/models/users';
+import { User } from '../DB/models/users';
 import errorMsg from './messages/errorMsg';
 import * as QRCode from 'qrcode';
 import moment from 'moment';
 import { splitCharacterType } from '../interfaces/utils.interface';
 const hashText = (text:string) => {
-    return crypto.createHash('sha256').update(text).digest('hex');
+    return crypto.createHash('sha256').update(text).digest('hex').substring(0,20);
 }
 const generateToken = (user: IUserPayload, tokenType = TOKEN_TYPE.ACCESS_TOKEN)=>{
     const { 

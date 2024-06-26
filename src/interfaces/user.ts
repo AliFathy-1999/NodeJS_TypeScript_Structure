@@ -16,7 +16,6 @@ enum TOKEN_TYPE {
   REFRESH_TOKEN = 'REFRESH_TOKEN'
 }
 interface IUser extends Document{
-    _id: ObjectId;
     firstName: string;
     lastName: string;
     email: string;

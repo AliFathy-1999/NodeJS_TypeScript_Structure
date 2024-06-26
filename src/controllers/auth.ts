@@ -13,6 +13,7 @@ import renderTemplate from '../utils/renderTemplate';
 import sendEmail from '../utils/sendEmail';
 import { IUserPayload, TOKEN_TYPE } from '../interfaces/user';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { cacheOption } from '../interfaces/utils.interface';
 
 
 const signIn = async (req:Request, res:Response, next:NextFunction) => {
@@ -95,7 +96,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
 const getProfile =async (req:Request, res:Response, next:NextFunction) => {
     const { _id } = req.user;
-    const user = await userServices.getUserService({_id});
+    const user = await userServices.getUserService({_id},cacheOption.USE_CACHE);
     if(user) infoLogger(`${req.method} | success | ${StatusCodes.OK} | ${req.protocol} | ${req.originalUrl}`)
     res.status(StatusCodes.OK).json({
         status: 'success',

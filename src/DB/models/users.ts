@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, InferSchemaType } from 'mongoose';
 import validator from 'validator'
 import bcryptjs from 'bcryptjs'
 
@@ -110,4 +110,7 @@ schema.pre('save', async function () {
     this.password = await bcryptjs.hash(this.password, 10);
 });
 
-export default model<IUser>('User', schema)
+type userType = InferSchemaType<typeof schema>;
+const User = model<IUser>('User', schema)
+
+export { User, userType }

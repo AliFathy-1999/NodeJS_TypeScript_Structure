@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../lib';
 import { removeImage } from '../utils/upload-files-utils/oncloud';
 
-import User from '../DB/models/users';
+import { User } from '../DB/models/users';
 import { infoLogger } from '../utils/logger';
 import successMsg from '../utils/messages/successMsg';
 import errorMsg from '../utils/messages/errorMsg';

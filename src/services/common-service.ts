@@ -2,7 +2,7 @@ import fetchDataUtils from '../utils/fetch-data-utils';
 import Ipaginate from '../interfaces/paginate';
 import { Document, Model } from 'mongoose'; // Adjust these imports as needed
 import searchUtils from '../utils/search.utils';
-import User from '../DB/models/users';
+import { User } from '../DB/models/users';
 
 type ModelType<T extends Document> = Model<T>;
 

@@ -1,11 +1,12 @@
-import { StatusCodes } from 'http-status-codes';
-import User from '../DB/models/users';
+import { User } from '../DB/models/users';
 import { IUser } from '../interfaces/user';
-import { ApiError } from '../lib';
-import errorMsg from '../utils/messages/errorMsg';
+import { cacheOption } from '../interfaces/utils.interface';
 
 
-const getUserService = async (filterBy: { [key:string] : any}) : Promise<IUser> => await User.findOne(filterBy); 
+const getUserService = async (filterBy: { [key:string] : any},cacheFlag: cacheOption = cacheOption.NO_CACHE) : Promise<IUser> => {
+    if(cacheFlag === cacheOption.USE_CACHE) return await User.findOne(filterBy).cache({}).exec()
+    return await User.findOne(filterBy)
+}; 
 
 const createUserService = async (userData: { [key:string] : any}) : Promise<IUser>=> await User.create(userData);
 
