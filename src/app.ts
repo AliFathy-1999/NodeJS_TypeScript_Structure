@@ -5,7 +5,8 @@ import helmet from 'helmet';
 import sanitizer from 'express-sanitizer';
 import cookieParser from 'cookie-parser';
 import  limiter from './middlewares/rate-limiter'
-import {ApiError, handleResponseError} from './lib/index'
+import {ApiError} from './lib/index'
+import {handleResponseError } from './middlewares/handlingErrors'
 import swaggerSpec from './utils/swagger'; // Import your swaggerSpec
 const swaggerUi = require('swagger-ui-express');
 

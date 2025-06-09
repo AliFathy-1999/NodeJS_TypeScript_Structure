@@ -7,7 +7,8 @@ declare global{
             user?: IUser | undefined,
             file?:Multer.File,
             files?: {[fieldname: string]: Multer.File[]} | Multer.File[],
-            requestDate: number
+            requestDate: number,
+            startTime: string | number | Date
         }
         interface Multer {
             File: Multer.File,

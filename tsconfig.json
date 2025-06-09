@@ -11,6 +11,6 @@
       "esModuleInterop": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "types": ["./src/types","./src/types/environment.d.ts","jest","./src/types/mongoose.d.ts"], 
-  }
+      "types": ["./src/types","./src/types/environment.d.ts","jest","./src/types/mongoose.d.ts","./src/types/axios.d.ts"], 
+  },
 }

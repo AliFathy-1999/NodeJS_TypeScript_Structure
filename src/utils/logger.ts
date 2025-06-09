@@ -7,6 +7,8 @@ import { orderObject, removeFalsyValues, removeSensitiveData } from './data.util
 
 import moment from 'moment';
 import { IinfoLogger, IloggerParams } from '../interfaces/utils.interface';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import stringify from "json-stringify-safe"
 const { app: { environment } } = config;
 
 let logsObjData: IinfoLogger = {
@@ -79,7 +81,7 @@ const levels = {
 };
 const customFormat = winston.format.combine(
     winston.format.printf(({ level, timestamp, ...rest}) => {
-        return JSON.stringify({ level, timestamp , message: rest.message })
+        return stringify({ level, timestamp , message: rest.message })
     }),
 );
 
@@ -108,11 +110,13 @@ const logger: Logger = createLogger({
 //     new transports.File({ filename: './logs/exceptions.log' })
 // );
 const errorLogger = (arg: string | IloggerParams, source: string = process.env.SERVER_NAME ) => {
+	// console.log('arg:', arg)
     if (typeof arg === 'string') {
         logger.error({ message: arg, source });
     }else if(typeof arg === "object" && source == process.env.SERVER_NAME){
         const { req, res, serviceName, elapsed } = arg as any
         const logsObjData = createLogData(req, res, serviceName, elapsed);
+        console.log('logsObjData:', logsObjData)
         logger.error(logsFormat(logsObjData));
     }else {
         logger.error({ ...arg.errorObj, source })
@@ -132,9 +136,8 @@ const infoLogger = (arg: string | IloggerParams,source: string = process.env.SER
     }
 }
 
-const httpLogger = (req:Request,res:Response, serviceName:string, elapsed?: number) => {
-    const logsObjData = createLogData(req, res, serviceName, elapsed);
-    logger.http(logsFormat(logsObjData));
+const httpLogger = (req:Request | AxiosRequestConfig, res:Response | Partial<AxiosResponse>, serviceName:string, elapsed?: number) => {
+    logger.http({serviceName, Request: req, Response: res, elapsed  });
 }
 
 const criticalLogger = (message:string, source: string = process.env.SERVER_NAME) => {
@@ -158,5 +161,6 @@ export {
     criticalLogger, 
     infoLogger,
     warnLogger,
-    debugLogger 
+    debugLogger,
+    logger
 };
